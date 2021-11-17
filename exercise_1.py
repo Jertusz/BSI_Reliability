@@ -44,8 +44,8 @@ def exercise_four(expected_reliability, time):
 
 def exercise_five(failure_rate, expected_return_rate):
     # This might be bad math
-    days_for_expected_rate = math.log(100-expected_return_rate)/-failure_rate
-    print(f'Exc. 5 {1/days_for_expected_rate*365}')
+    days_for_expected_rate = math.log(1-(expected_return_rate/100))/-failure_rate
+    print(f'Exc. 5 {days_for_expected_rate*365}')
 
 
 def main():
