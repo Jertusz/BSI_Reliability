@@ -1,0 +1,29 @@
+Autor: Jedrzej Szadejko
+CON51-CPP. Ensure actively held locks are release on exceptional conditions
+Zapewnienie, ze locki sa odpuszczane po wyrzuceniu przez program exceptiona, zeby zapobiegac deadlockom
+diff --git a/CON51-CPP/main.cpp b/CON51-CPP/main.cpp
+index 2b89e14..67af92e 100644
+--- a/CON51-CPP/main.cpp
++++ b/CON51-CPP/main.cpp
+@@ -3,8 +3,12 @@
+ void manipulate_shared_data(std::mutex& pm)
+ {
+ 	pm.lock();
+-
+-	throw 0;
++    try {
++        throw 0;
++    } catch (...) {
++        pm.unlock();
++        throw;
++    }
+ 
+ 	pm.unlock();
+ }
+@@ -15,4 +19,4 @@ int main()
+ 	manipulate_shared_data(m);
+ 
+ 	return 0;
+-}
+\ No newline at end of file
++}

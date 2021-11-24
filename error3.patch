@@ -1,0 +1,22 @@
+Autor: Jedrzej Szadejko
+CTR55-CPP Do not use an additive operator on an iterator if the result would overflow
+Jezeli wskaznik otrzymany po dodaniu wskaznika oraz innej zmiennej nie jest elementem tablicy, to jego zachowanie jest undefined
+diff --git a/CTR55-CPP/main.cpp b/CTR55-CPP/main.cpp
+index 21205ed..0ce4290 100644
+--- a/CTR55-CPP/main.cpp
++++ b/CTR55-CPP/main.cpp
+@@ -3,6 +3,7 @@
+ 
+ void f(const std::vector<int>& c)
+ {
++    const std::vector<int>::size_type maxSize = 20;
+ 	for (auto i = c.begin(), e = i + 20; i != e; ++i)
+ 	{
+ 		std::cout << *i << std::endl;
+@@ -16,4 +17,4 @@ int main()
+ 	f(v);
+ 
+ 	return 0;
+-}
+\ No newline at end of file
++}
